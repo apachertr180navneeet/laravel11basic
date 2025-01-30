@@ -157,6 +157,11 @@
                         <span>My Account</span>
                     </a>
 
+                    <a href="{{route('admin.change.password')}}" class="dropdown-item">
+                        <i class="mdi mdi-account-circle me-1"></i>
+                        <span>Change Password</span>
+                    </a>
+
                     <!-- item-->
                     <a href="{{route('admin.logout')}}" class="dropdown-item">
                         <i class="mdi mdi-logout me-1"></i>

@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
+use App\Models\{
+    User,
+};
+
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Mail, DB, Hash, Validator, Session, File,Exception;
@@ -146,6 +150,46 @@ class AuthController extends Controller
             
             // Optionally, you can redirect the user to the home page with an error message
             return redirect()->route('home')->with('error', 'There was an issue updating your profile.');
+        }
+    }
+
+
+    /**
+     * Change Password
+     */
+    public function changePassowrd()
+    {
+        try {
+            $user = Auth::user();
+            return view('admin.changePassowrd.change_passowrd', compact('user'));
+        } catch (\Exception $e) {
+            // Log the exception or handle it accordingly
+            \Log::error("Error fetching profile: " . $e->getMessage());
+            
+            // Optionally, you can redirect the user or show a custom error message
+            return redirect()->route('home')->with('error', 'There was an issue retrieving your profile.');
+        }
+    }
+
+    public function updatePassword(Request $request)
+    {
+        try{
+            $request->validate([
+                "old_password" => "required",
+                "new_password" => "required|confirmed",
+            ]);
+            #Match The Old Password
+            if (!Hash::check($request->old_password, auth()->user()->password)) {
+                return back()->with("error", "Old Password Doesn't match!");
+            }
+            #Update the new Password
+            User::whereId(auth()->user()->id)->update([
+                "password" => Hash::make($request->new_password),
+            ]);
+            return back()->with("success", "Password changed successfully!");
+        }
+        catch(Exception $e){
+            return back()->with("error",$e->getMessage());
         }
     }
 }

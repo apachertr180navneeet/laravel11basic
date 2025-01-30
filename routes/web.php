@@ -28,6 +28,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('logout', 'logout')->name('logout');
             Route::get('getprofile', 'getProfile')->name('get.profile');
             Route::post('updateprofile', 'updateProfile')->name('update.profile');
+            Route::get('cahngepassword', 'changePassowrd')->name('change.password');
+            Route::post('updatepassword', 'updatePassword')->name('update.passowrd');
         });
         Route::controller(DashboardController::class)->group(function () {
             Route::get('dashboard', 'index')->name('dashboard');
