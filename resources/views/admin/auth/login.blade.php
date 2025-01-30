@@ -13,7 +13,9 @@
                         </div>
 
                         <div class="card-body p-4">
-                            <x-alert />
+                            @if ($errors->has('error'))
+                                <x-alert />
+                            @endif
                             <div class="text-center w-75 m-auto">
                                 <h4 class="text-dark-50 text-center pb-0 fw-bold">Admin Login</h4>
                                 <p class="text-muted mb-4">Enter your email address and password to access admin panel.</p>
@@ -23,7 +25,10 @@
                                 @csrf
                                 <div class="mb-3">
                                     <label for="emailaddress" class="form-label">Email address</label>
-                                    <input class="form-control" type="email" name="email" id="emailaddress" required="" placeholder="Enter your email">
+                                    <input class="form-control" type="email" name="email" id="emailaddress" placeholder="Enter your email">
+                                    @error('email')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
                                 </div>
 
                                 <div class="mb-3">
@@ -35,6 +40,9 @@
                                             <span class="password-eye"></span>
                                         </div>
                                     </div>
+                                    @error('password')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
                                 </div>
 
                                 <div class="mb-3 mb-3">

@@ -22,6 +22,7 @@
 
     <!-- Icons css -->
     <link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+
 </head>
 
 <body class="authentication-bg position-relative">
