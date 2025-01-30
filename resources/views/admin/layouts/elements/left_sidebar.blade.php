@@ -31,11 +31,11 @@
             {{--  <li class="side-nav-title">Apps</li>  --}}
 
             <li class="side-nav-item">
-                <a href="{{route('admin.dashboard')}}" class="side-nav-link">
-                    <i class="uil-calender"></i>
+                <a href="{{ route('admin.dashboard') }}" class="side-nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                    <i class="uil-home-alt"></i>
                     <span> Dashboard </span>
                 </a>
-            </li>
+            </li>            
             
             {{--  multi Level login  --}}
             {{--  <li class="side-nav-item">

@@ -134,7 +134,11 @@
             <li class="dropdown">
                 <a class="nav-link dropdown-toggle arrow-none nav-user px-2" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                     <span class="account-user-avatar">
-                        <img src="assets/images/users/avatar-1.jpg" alt="user-image" width="32" class="rounded-circle">
+                        @if(!empty(Auth::user()->avatar) && file_exists(public_path('/').Auth::user()->avatar))
+                            <img src="{{asset(Auth::user()->avatar)}}" alt="user-image" width="32" class="rounded-circle">
+                        @else
+                            <img src="{{asset('admin/assets/images/users/avatar-1.jpg')}}" alt="user-image" width="32" class="rounded-circle">
+                        @endif
                     </span>
                     <span class="d-lg-flex flex-column gap-1 d-none">
                         <h5 class="my-0">{{ Auth::user()->name }}</h5>
@@ -148,7 +152,7 @@
                     </div>
 
                     <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item">
+                    <a href="{{route('admin.get.profile')}}" class="dropdown-item">
                         <i class="mdi mdi-account-circle me-1"></i>
                         <span>My Account</span>
                     </a>

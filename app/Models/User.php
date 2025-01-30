@@ -22,7 +22,12 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'phone ',
+        'avatar',
+        'address',
     ];
+
+    protected $appends = ['avatar_full_path'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -45,5 +50,14 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function getAvatarFullPathAttribute()
+    {
+        if($this->avatar != ''){
+            return asset($this->avatar);
+        }else{
+            return "";
+        }
     }
 }

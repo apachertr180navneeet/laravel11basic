@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
+use Carbon\Carbon;
+use Illuminate\Support\Str;
+use Mail, DB, Hash, Validator, Session, File,Exception;
+
 class AuthController extends Controller
 {
     public function login(){
@@ -60,6 +64,69 @@ class AuthController extends Controller
 
             // Optionally, you can redirect with an error message
             return redirect()->route('admin.login')->with('error', 'Logout failed, please try again.');
+        }
+    }
+    /**
+     * Get Profile Settings
+     */
+    public function getProfile()
+    {
+        try {
+            $user = Auth::user();
+            return view('admin.profile.profile', compact('user'));
+        } catch (\Exception $e) {
+            // Log the exception or handle it accordingly
+            \Log::error("Error fetching profile: " . $e->getMessage());
+            
+            // Optionally, you can redirect the user or show a custom error message
+            return redirect()->route('home')->with('error', 'There was an issue retrieving your profile.');
+        }
+    }
+
+
+    /**
+     * Get Profile Settings
+     */
+    public function updateProfile(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            $data = $request->all();
+            $validator = Validator::make($data, [
+                "name" => "required",
+                "email" => "required|email|unique:users,email," . $user->id,
+                "phone" => "required|numeric|min:9|unique:users,phone," . $user->id,
+                "address" => "required",
+                "avatar" => "sometimes|image|mimes:jpeg,jpg,png|max:5000"
+            ]);            
+            
+            if($validator->fails()) {
+                return redirect()->back()->withInput($request->all())->withErrors($validator->errors());
+            }
+
+            if($request->file("avatar")) {
+                $file = $request->file("avatar");
+                $filename = time() . $file->getClientOriginalName();
+                $folder = "uploads/user/";
+                $path = public_path($folder);
+                if (!File::exists($path)) {
+                    File::makeDirectory($path, $mode = 0777, true, true);
+                }
+                $file->move($path, $filename);
+                $user->avatar = $folder . $filename;
+            }
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->phone = $request->phone;
+            $user->address = $request->address;
+            $user->save();
+            return redirect()->back()->with("success", "Profile update successfully!");
+        } catch (\Exception $e) {
+            // Log the exception or handle it accordingly
+            \Log::error("Error fetching profile: " . $e->getMessage());
+            
+            // Optionally, you can redirect the user or show a custom error message
+            return redirect()->route('home')->with('error', 'There was an issue retrieving your profile.');
         }
     }
 }
