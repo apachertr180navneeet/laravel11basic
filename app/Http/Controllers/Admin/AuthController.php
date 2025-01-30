@@ -23,10 +23,10 @@ class AuthController extends Controller
         ]);
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'role' => 'admin'])) {
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('admin.dashboard')->with('success', 'Login successfully.');
         }
 
-        return back()->withErrors(['error' => 'Invalid credentials']);
+        return back()->with(['error' => 'Invalid credentials']);
     }
 
     public function showForgetPassword(){

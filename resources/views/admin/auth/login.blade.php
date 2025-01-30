@@ -13,7 +13,7 @@
                         </div>
 
                         <div class="card-body p-4">
-
+                            <x-alert />
                             <div class="text-center w-75 m-auto">
                                 <h4 class="text-dark-50 text-center pb-0 fw-bold">Admin Login</h4>
                                 <p class="text-muted mb-4">Enter your email address and password to access admin panel.</p>

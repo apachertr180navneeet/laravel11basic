@@ -40,6 +40,7 @@
         <!-- ============================================================== -->
 
         <div class="content-page">
+            <x-alert />
             @yield('content')
             <!-- Footer Start -->
             @include('admin.layouts.elements.footer')
