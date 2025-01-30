@@ -7,6 +7,10 @@ use App\Http\Controllers\Admin\{
     DashboardController,
 };
 
+use App\Http\Middleware\{
+    AdminMiddleware
+};
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -16,11 +20,16 @@ Route::get('/', function () {
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::controller(AuthController::class)->group(function () {
         Route::get('login', 'login')->name('login');
+        Route::post('login', 'loginPost')->name('login.post');
         Route::get('forget-password', 'showForgetPassword')->name('forget.password.get');
         Route::get('reset-password/{token}', 'showResetPasswordForm')->name('reset.password.get');
     });
-
-    Route::controller(DashboardController::class)->group(function () {
-        Route::get('dashboard', 'index')->name('dashboard');
+    Route::middleware([AdminMiddleware::class])->group(function () {
+        Route::controller(AuthController::class)->group(function () {
+            Route::get('logout', 'logout')->name('logout');
+        });
+        Route::controller(DashboardController::class)->group(function () {
+            Route::get('dashboard', 'index')->name('dashboard');
+        });
     });
 });
