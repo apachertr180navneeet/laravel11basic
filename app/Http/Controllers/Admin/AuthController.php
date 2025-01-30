@@ -90,43 +90,62 @@ class AuthController extends Controller
     public function updateProfile(Request $request)
     {
         try {
+            // Get the currently authenticated user
             $user = Auth::user();
+            
+            // Validate the incoming request data
             $data = $request->all();
             $validator = Validator::make($data, [
-                "name" => "required",
-                "email" => "required|email|unique:users,email," . $user->id,
-                "phone" => "required|numeric|min:9|unique:users,phone," . $user->id,
-                "address" => "required",
-                "avatar" => "sometimes|image|mimes:jpeg,jpg,png|max:5000"
+                "name" => "required|string|max:255", // Name is required, must be a string and max 255 chars
+                "email" => "required|email|unique:users,email," . $user->id, // Email is required and must be unique excluding current user's email
+                "phone" => "required|numeric|min:9|unique:users,phone," . $user->id, // Phone is required, numeric, and unique excluding current user's phone
+                "address" => "required|string|max:500", // Address is required, must be a string and max 500 chars
+                "avatar" => "sometimes|image|mimes:jpeg,jpg,png|max:5000" // Avatar is optional, must be an image and within size limit
             ]);            
-            
-            if($validator->fails()) {
+
+            // If validation fails, return back with errors and input values
+            if ($validator->fails()) {
                 return redirect()->back()->withInput($request->all())->withErrors($validator->errors());
             }
 
-            if($request->file("avatar")) {
+            // If the user uploaded an avatar
+            if ($request->hasFile("avatar")) {
                 $file = $request->file("avatar");
+                // Create a unique filename using the current timestamp and the original filename
                 $filename = time() . $file->getClientOriginalName();
+                // Define the folder to store the avatar
                 $folder = "uploads/user/";
                 $path = public_path($folder);
+                
+                // Check if the directory exists, if not, create it
                 if (!File::exists($path)) {
-                    File::makeDirectory($path, $mode = 0777, true, true);
+                    File::makeDirectory($path, 0777, true); // Set permission to 0777 for full access
                 }
+
+                // Move the file to the destination folder
                 $file->move($path, $filename);
+                
+                // Update the user's avatar path in the database
                 $user->avatar = $folder . $filename;
             }
+
+            // Update other user details
             $user->name = $request->name;
             $user->email = $request->email;
             $user->phone = $request->phone;
             $user->address = $request->address;
+
+            // Save the updated user record to the database
             $user->save();
-            return redirect()->back()->with("success", "Profile update successfully!");
+
+            // Redirect back with a success message
+            return redirect()->back()->with("success", "Profile updated successfully!");
         } catch (\Exception $e) {
-            // Log the exception or handle it accordingly
-            \Log::error("Error fetching profile: " . $e->getMessage());
+            // Log the exception for debugging purposes
+            \Log::error("Error updating profile: " . $e->getMessage());
             
-            // Optionally, you can redirect the user or show a custom error message
-            return redirect()->route('home')->with('error', 'There was an issue retrieving your profile.');
+            // Optionally, you can redirect the user to the home page with an error message
+            return redirect()->route('home')->with('error', 'There was an issue updating your profile.');
         }
     }
 }
