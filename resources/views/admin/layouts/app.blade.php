@@ -22,6 +22,10 @@
     <!-- Icons css -->
     <link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
 
+    <!-- Datatables css -->
+    <link href="{{asset('admin/assets/vendor/datatables.net-bs5/css/dataTables.bootstrap5.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets/vendor/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css')}}" rel="stylesheet" type="text/css" />
+
 </head>
 
 <body>
@@ -72,6 +76,17 @@
 
     <!-- App js -->
     <script src="{{asset('admin/assets/js/app.min.js')}}"></script>
+
+                                                      
+    <!-- Datatables js -->
+    <script src="{{asset('admin/assets/vendor/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('admin/assets/vendor/datatables.net-bs5/js/dataTables.bootstrap5.min.js')}}"></script>
+    <script src="{{asset('admin/assets/vendor/datatables.net-responsive/js/dataTables.responsive.min.js')}}"></script>
+    <script src="{{asset('admin/assets/vendor/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js')}}"></script>
+
+    <!-- Datatable Init js -->
+    <script src="{{asset('admin/assets/js/pages/demo.datatable-init.js')}}"></script>
+
 
 </body>
 </html>

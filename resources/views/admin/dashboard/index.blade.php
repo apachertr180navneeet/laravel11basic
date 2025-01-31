@@ -443,3 +443,14 @@
 
             </div> <!-- content -->
     @endsection
+
+    @section('script')
+            @section('script')    <!-- Apex  Charts js -->
+            <script src="{{asset('admin/assets/vendor/apexcharts/apexcharts.min.js')}}"></script>
+        
+            <!-- Todo js -->
+            <script src="{{asset('admin/assets/js/ui/component.todo.js')}}"></script>
+        
+            <!-- CRM Dashboard Demo App Js -->
+            <script src="{{asset('admin/assets/js/pages/demo.crm-dashboard.js')}}"></script>
+    @endsection

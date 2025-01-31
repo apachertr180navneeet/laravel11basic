@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\{
     AuthController,
     DashboardController,
+    SubCompanyController
 };
 
 use App\Http\Middleware\{
@@ -33,6 +34,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         });
         Route::controller(DashboardController::class)->group(function () {
             Route::get('dashboard', 'index')->name('dashboard');
+        });
+
+        Route::controller(SubCompanyController::class)->prefix('sub-company')->name('sub.company.')->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/getall', 'getAll')->name('getall');
         });
     });
 });

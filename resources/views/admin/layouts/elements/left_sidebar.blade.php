@@ -35,7 +35,17 @@
                     <i class="uil-home-alt"></i>
                     <span> Dashboard </span>
                 </a>
-            </li>            
+            </li> 
+            
+            
+            <li class="side-nav-title">Master</li>
+
+            <li class="side-nav-item">
+                <a href="{{ route('admin.sub.company.index') }}" class="side-nav-link {{ request()->routeIs('admin.sub.company.*') ? 'active' : '' }}">
+                    <i class="uil-home-alt"></i>
+                    <span> Sub Company </span>
+                </a>
+            </li> 
             
             {{--  multi Level login  --}}
             {{--  <li class="side-nav-item">
