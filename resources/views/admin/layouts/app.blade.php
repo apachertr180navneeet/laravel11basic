@@ -24,7 +24,14 @@
 
     <!-- Datatables css -->
     <link href="{{asset('admin/assets/vendor/datatables.net-bs5/css/dataTables.bootstrap5.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('assets/vendor/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css')}}" rel="stylesheet" type="text/css" />
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- DataTables core JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    <!-- DataTables FixedHeader plugin JS -->
+    <script src="https://cdn.datatables.net/fixedheader/3.2.1/js/dataTables.fixedHeader.min.js"></script>
 
 </head>
 
@@ -65,28 +72,8 @@
     <!-- Vendor js -->
     <script src="{{asset('admin/assets/js/vendor.min.js')}}"></script>
 
-    <!-- Apex  Charts js -->
-    <script src="{{asset('admin/assets/vendor/apexcharts/apexcharts.min.js')}}"></script>
-
-    <!-- Todo js -->
-    <script src="{{asset('admin/assets/js/ui/component.todo.js')}}"></script>
-
-    <!-- CRM Dashboard Demo App Js -->
-    <script src="{{asset('admin/assets/js/pages/demo.crm-dashboard.js')}}"></script>
-
     <!-- App js -->
     <script src="{{asset('admin/assets/js/app.min.js')}}"></script>
-
-                                                      
-    <!-- Datatables js -->
-    <script src="{{asset('admin/assets/vendor/datatables.net/js/jquery.dataTables.min.js')}}"></script>
-    <script src="{{asset('admin/assets/vendor/datatables.net-bs5/js/dataTables.bootstrap5.min.js')}}"></script>
-    <script src="{{asset('admin/assets/vendor/datatables.net-responsive/js/dataTables.responsive.min.js')}}"></script>
-    <script src="{{asset('admin/assets/vendor/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js')}}"></script>
-
-    <!-- Datatable Init js -->
-    <script src="{{asset('admin/assets/js/pages/demo.datatable-init.js')}}"></script>
-
 
 </body>
 </html>
