@@ -20,4 +20,12 @@ class SubCompanyController extends Controller
         $subCompanys = SubCompany::select(['id', 'name', 'status'])->orderBy('id', 'desc')->get();
         return view('admin.sub_company.index',compact('subCompanys'));
     }
+
+
+    public function getAll()
+    {
+        $subCompanies = SubCompany::select('id', 'name', 'status')->get();
+
+        return response()->json(['data' => $subCompanies]);
+    }
 }
