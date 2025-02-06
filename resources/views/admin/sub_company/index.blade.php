@@ -1,5 +1,6 @@
-@extends('admin.layouts.app') 
-@section('content') 
+@extends('admin.layouts.app')
+
+@section('content')
 
 <div class="content">
     <div class="container-fluid">
@@ -32,27 +33,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ( $subCompanys as $subCompany)
-                                    <tr>
-                                        <td>{{ $subCompany->name }}</td>
-                                        <td>
-                                            @if ($subCompany->status == 'active')
-                                                <span class="badge bg-success">Active</span>
-                                            @else   
-                                                <span class="badge bg-danger">Inactive</span>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if ($subCompany->status == 'active')
-                                                <button type="button" class="btn btn-danger">Inactive</button>
-                                            @else   
-                                                <button type="button" class="btn btn-success">Active</button>
-                                            @endif
-                                            <button type="button" class="btn btn-warning">Edit</button>
-                                            <button type="button" class="btn btn-danger">Delete</button>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                <!-- Data will be populated by DataTables -->
                             </tbody>
                         </table>
 
@@ -67,5 +48,23 @@
 @endsection
 
 @push('scripts')
-
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#basic-datatable').DataTable({
+            alert('hello there');
+            processing: true,
+            serverSide: true,
+            ajax: '{{ url("admin/sub-companies/getall") }}',
+            columns: [
+                { data: 'name', name: 'name' },
+                { data: 'status', name: 'status', render: function(data, type, row) {
+                    return data === 'active' ? 
+                        '<span class="badge bg-success">Active</span>' : 
+                        '<span class="badge bg-danger">Inactive</span>';
+                }},
+                { data: 'action', name: 'action', orderable: false, searchable: false }
+            ]
+        });
+    });
+</script>
 @endpush
